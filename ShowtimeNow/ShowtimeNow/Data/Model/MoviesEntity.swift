@@ -19,5 +19,4 @@ struct MovieEntity: Decodable {
     let overview: String?
     let release_date: String?
     let vote_average: Double?
-    // TODO: TMP
 }

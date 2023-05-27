@@ -37,6 +37,8 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func setup() {
+        navigationItem.largeTitleDisplayMode = .never
+        
         detailsView.title.text = viewModel.title
         detailsView.releaseDate.text = viewModel.releaseDate
         detailsView.rating.text = viewModel.rating

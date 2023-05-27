@@ -1,5 +1,5 @@
 //
-//  UIColor+Colors.swift
+//  UIColor+Extensions.swift
 //  ShowtimeNow
 //
 //  Created by Aleksandra Kustra on 27/05/2023.

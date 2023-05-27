@@ -19,16 +19,15 @@ final class MovieDetailsViewModel {
     }
     
     var releaseDate: String {
-        movie.release_date ?? "N/A" //
+        "Release date: \(String.formattedDate(string: movie.release_date ?? "N/A"))"
     }
     
     var description: String {
-        movie.overview ?? "N/A" //
+        movie.overview ?? "N/A"
     }
     
     var rating: String {
-        let votes = movie.vote_average ?? 0
-        return String(format: "%.1f", votes)
+        "Rating: \(String(format: "%.1f", movie.vote_average ?? 0)) / 10"
     }
     
     var overview: String {

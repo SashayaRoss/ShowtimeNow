@@ -17,6 +17,14 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
+    private let starIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "star")
+        imageView.tintColor = .turquoise()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
 
     private let title: UILabel = {
         let label = UILabel()
@@ -39,12 +47,14 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
 
     private func setupLayout() {
         contentView.addSubview(imageView)
+        contentView.addSubview(starIconView)
         contentView.addSubview(title)
         
         contentView.clipsToBounds = true
         
-        title.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        starIconView.translatesAutoresizingMaskIntoConstraints = false
+        title.translatesAutoresizingMaskIntoConstraints = false
         
         let imageSize = contentView.height - Constants.bigPadding
         NSLayoutConstraint.activate([
@@ -52,6 +62,11 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.smallPadding),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
             imageView.heightAnchor.constraint(equalToConstant: imageSize),
+            
+            starIconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.smallPadding),
+//            starIconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.smallPadding),
+            starIconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
+            starIconView.heightAnchor.constraint(equalToConstant: Constants.starIconSize),
             
             title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -Constants.smallPadding),
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -74,5 +89,6 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     private struct Constants {
         static let smallPadding: CGFloat = 10.0
         static let bigPadding: CGFloat = 40.0
+        static let starIconSize: CGFloat = 30.0
     }
 }

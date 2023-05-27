@@ -8,9 +8,12 @@
 import UIKit
 
 final class MovieDetailsView: UIView, MovieDetailsViewInterface {
+    let scrollView = UIScrollView()
+    let containerView = UIStackView()
     let imageView = UIImageView()
     let title = UILabel()
     let releaseDate = UILabel()
-    let overview = UILabel()
     let rating = UILabel()
+    let starIcon = UIImageView()
+    let overview = UILabel()
 }
