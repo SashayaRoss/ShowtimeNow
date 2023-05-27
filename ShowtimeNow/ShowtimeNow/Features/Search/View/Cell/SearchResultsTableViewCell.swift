@@ -22,7 +22,7 @@ final class SearchResultsTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         return label
     }()
     
