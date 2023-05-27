@@ -33,6 +33,10 @@ final class MovieDetailsViewModel {
     var overview: String {
         movie.overview ?? "N/A"
     }
+    
+    var isFavourite: Bool {
+        false // TODO: 
+    }
 
     init(movie: MovieEntity) {
         self.movie = movie

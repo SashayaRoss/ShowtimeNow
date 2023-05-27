@@ -40,7 +40,12 @@ final class MovieListViewControllerFactory {
             layoutManager: layoutManager
         )
         
+        let repositorySearch = SearchRepository(
+            networkService: networkService,
+            endpoint: SearchEndpoint())
+        
         let viewController = MovieListViewController(
+            repository: repositorySearch,
             viewModel: viewModel,
             viewFactory: viewFactory,
             cellViewModelFactory: cellViewModelFactory

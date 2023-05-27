@@ -14,7 +14,7 @@ final class MovieDetailsLayoutManager {
         view.scrollView.addSubview(view.title)
         view.scrollView.addSubview(view.releaseDate)
         view.scrollView.addSubview(view.rating)
-        view.scrollView.addSubview(view.starIcon)
+        view.scrollView.addSubview(view.favouriteButton)
         view.scrollView.addSubview(view.overview)
     }
     
@@ -24,7 +24,7 @@ final class MovieDetailsLayoutManager {
         view.title.translatesAutoresizingMaskIntoConstraints = false
         view.releaseDate.translatesAutoresizingMaskIntoConstraints = false
         view.rating.translatesAutoresizingMaskIntoConstraints = false
-        view.starIcon.translatesAutoresizingMaskIntoConstraints = false
+        view.favouriteButton.translatesAutoresizingMaskIntoConstraints = false
         view.overview.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -41,10 +41,11 @@ final class MovieDetailsLayoutManager {
             view.title.topAnchor.constraint(equalTo: view.imageView.bottomAnchor, constant: Constants.smallPadding),
             view.title.leadingAnchor.constraint(equalTo: view.imageView.leadingAnchor),
             
-            view.starIcon.centerYAnchor.constraint(equalTo: view.title.centerYAnchor),
-            view.starIcon.leadingAnchor.constraint(equalTo: view.title.trailingAnchor),
-            view.starIcon.trailingAnchor.constraint(equalTo: view.imageView.trailingAnchor, constant: -Constants.smallPadding),
-            view.starIcon.heightAnchor.constraint(equalToConstant: Constants.starIconSize),
+            view.favouriteButton.centerYAnchor.constraint(equalTo: view.title.centerYAnchor),
+            view.favouriteButton.leadingAnchor.constraint(equalTo: view.title.trailingAnchor),
+            view.favouriteButton.trailingAnchor.constraint(equalTo: view.imageView.trailingAnchor, constant: -Constants.smallPadding),
+            view.favouriteButton.heightAnchor.constraint(equalToConstant: Constants.starIconSize),
+            view.favouriteButton.widthAnchor.constraint(equalToConstant: Constants.starIconSize),
             
             view.releaseDate.topAnchor.constraint(equalTo: view.title.bottomAnchor, constant: Constants.smallPadding),
             view.releaseDate.leadingAnchor.constraint(equalTo: view.imageView.leadingAnchor),

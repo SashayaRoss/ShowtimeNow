@@ -14,6 +14,6 @@ final class MovieDetailsView: UIView, MovieDetailsViewInterface {
     let title = UILabel()
     let releaseDate = UILabel()
     let rating = UILabel()
-    let starIcon = UIImageView()
+    let favouriteButton = UIButton()
     let overview = UILabel()
 }

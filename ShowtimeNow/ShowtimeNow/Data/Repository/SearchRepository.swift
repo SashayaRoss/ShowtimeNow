@@ -1,5 +1,5 @@
 //
-//  MoviesRepository.swift
+//  SearchRepository.swift
 //  ShowtimeNow
 //
 //  Created by Aleksandra Kustra on 27/05/2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MoviesRepository {
+final class SearchRepository {
     enum Error: Swift.Error {
         case networkServiceUnavailable
         case invalidResponse(error: Swift.Error)
@@ -15,27 +15,30 @@ final class MoviesRepository {
     }
     
     private let networkService: NetworkServiceProviding?
-    private let endpoint: MoviesProviding
+    private let endpoint: SearchProviding
 
     init(
         networkService: NetworkServiceProviding?,
-        endpoint: MoviesProviding
+        endpoint: SearchProviding
     ) {
         self.networkService = networkService
         self.endpoint = endpoint
     }
 }
 
-extension MoviesRepository: MoviesLoading {
-    func getMovies(completion: @escaping (Result<MoviesEntity, Swift.Error>) -> Void) {
-        let moviesEndpoint = endpoint.getMoviesPath()
-        
+extension SearchRepository: SearchLoading {
+    func search(with querry: String, completion: @escaping (Result<MoviesEntity, Swift.Error>) -> Void) {
+        let searchEndpoint = endpoint.getSearchPath()
         guard let network = networkService else {
             completion(.failure(Error.networkServiceUnavailable))
             return
         }
-
-        network.requestData(with: moviesEndpoint, params: [:]) { result in
+        let params = [
+            "language": "en-US",
+            "query": querry.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        ]
+        
+        network.requestData(with: searchEndpoint, params: params) { result in
             switch result {
             case let .success(data):
                 do {

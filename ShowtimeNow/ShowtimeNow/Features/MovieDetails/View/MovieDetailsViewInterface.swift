@@ -13,6 +13,6 @@ protocol MovieDetailsViewInterface: UIView {
     var title: UILabel { get }
     var releaseDate: UILabel { get }
     var rating: UILabel { get }
-    var starIcon: UIImageView { get }
+    var favouriteButton: UIButton { get }
     var overview: UILabel { get }
 }

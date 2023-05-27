@@ -18,12 +18,14 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let starIconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "star")
-        imageView.tintColor = .turquoise()
-        imageView.contentMode = .scaleAspectFill
-        return imageView
+    private let favouriteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.tintColor = .turquoise()
+        button.backgroundColor = .darkBlue().withAlphaComponent(0.8)
+        button.layer.cornerRadius = 8
+        button.contentMode = .scaleAspectFill
+        return button
     }()
 
     private let title: UILabel = {
@@ -34,9 +36,16 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var isFavourite: Bool = false {
+        didSet {
+            let image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+            favouriteButton.setImage(image, for: .normal)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         setupLayout()
         setupAppearance()
     }
@@ -47,13 +56,13 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
 
     private func setupLayout() {
         contentView.addSubview(imageView)
-        contentView.addSubview(starIconView)
+        contentView.addSubview(favouriteButton)
         contentView.addSubview(title)
         
         contentView.clipsToBounds = true
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        starIconView.translatesAutoresizingMaskIntoConstraints = false
+        favouriteButton.translatesAutoresizingMaskIntoConstraints = false
         title.translatesAutoresizingMaskIntoConstraints = false
         
         let imageSize = contentView.height - Constants.bigPadding
@@ -63,10 +72,10 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
             imageView.heightAnchor.constraint(equalToConstant: imageSize),
             
-            starIconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.smallPadding),
-//            starIconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.smallPadding),
-            starIconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
-            starIconView.heightAnchor.constraint(equalToConstant: Constants.starIconSize),
+            favouriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.smallPadding),
+            favouriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
+            favouriteButton.heightAnchor.constraint(equalToConstant: Constants.starIconSize),
+            favouriteButton.widthAnchor.constraint(equalToConstant: Constants.starIconSize),
             
             title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -Constants.smallPadding),
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -84,11 +93,17 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     func configure(with viewModel: MovieListCellViewModel) {
         title.text = viewModel.title
+        favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
+    }
+    
+    @objc func likedMovie() {
+        isFavourite = isFavourite ? false : true
+        // TODO:
     }
     
     private struct Constants {
         static let smallPadding: CGFloat = 10.0
         static let bigPadding: CGFloat = 40.0
-        static let starIconSize: CGFloat = 30.0
+        static let starIconSize: CGFloat = 40.0
     }
 }

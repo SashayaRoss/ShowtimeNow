@@ -10,7 +10,10 @@ final class ListAppearanceManager {}
 extension ListAppearanceManager: MovieListAppearanceManaging {
     func decorate(view: MovieListViewInterface) {
         view.backgroundColor = .white
+        
         view.collectionView.backgroundColor = .clear
+        view.collectionView.showsVerticalScrollIndicator = false
+        
         view.activityIndicator.color = .white
     }
 }

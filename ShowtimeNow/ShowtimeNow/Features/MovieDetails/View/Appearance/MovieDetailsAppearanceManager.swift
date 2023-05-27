@@ -23,10 +23,12 @@ extension MovieDetailsAppearanceManager: MovieDetailsAppearanceManaging {
         
         view.title.numberOfLines = 0
         view.title.font = .systemFont(ofSize: 22, weight: .semibold)
-        
-        view.starIcon.image = UIImage(systemName: "star")
-        view.starIcon.tintColor = .turquoise()
-        view.starIcon.contentMode = .scaleAspectFill
+
+        view.favouriteButton.setImage(UIImage(systemName: "star"), for: .normal)
+        view.favouriteButton.tintColor = .turquoise()
+        view.favouriteButton.backgroundColor = .darkBlue().withAlphaComponent(0.8)
+        view.favouriteButton.layer.cornerRadius = 8
+        view.favouriteButton.contentMode = .scaleAspectFill
         
         view.releaseDate.font = .systemFont(ofSize: 16, weight: .light)
         view.rating.font = .systemFont(ofSize: 16, weight: .light)

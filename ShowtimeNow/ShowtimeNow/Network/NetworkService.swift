@@ -31,27 +31,29 @@ final class NetworkService {
         self.config = config
     }
     
-    private func urlRequest(with path: String) -> URLRequest? {
+    private func urlRequest(with path: String, params: [String: String]?) -> URLRequest? {
         let url = URL(string: config.baseURL.absoluteString + path)
         guard let url = url, var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil // Invalid endpoint
         }
 
         var queryItems = [URLQueryItem(name: "api_key", value: Constants.apiKey)]
-        queryItems.append(contentsOf: config.queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) })
+        if let params = params {
+            queryItems.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) })
+        }
         
         urlComponents.queryItems = queryItems
-        guard let finaUrl = urlComponents.url else {
+        guard let finalUrl = urlComponents.url else {
             return nil // Invalid Url
         }
         
-        return URLRequest(url: finaUrl)
+        return URLRequest(url: finalUrl)
     }
 }
 
 extension NetworkService: NetworkServiceProviding {
-    func requestData(with path: String, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
-        guard let request = self.urlRequest(with: path) else {
+    func requestData(with path: String, params: [String: String]? = nil, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
+        guard let request = self.urlRequest(with: path, params: params) else {
             completion(.failure(Error.invalidUrl))
             return
         }

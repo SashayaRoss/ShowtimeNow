@@ -8,6 +8,8 @@
 import UIKit
 
 final class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
+    private let repository: SearchLoading
+    
     private let searchController: UISearchController = {
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
         vc.searchBar.placeholder = "Search movie"
@@ -16,7 +18,16 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
         return vc
     }()
     
-    // MARK: - Lifecycle
+    init(
+        repository: SearchLoading
+    ) {
+        self.repository = repository
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +54,18 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
               let querry = searchBar.text,
               !querry.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
+        }
+        
+        repository.search(with: querry) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+//                    resultsController.update(with: results)
+                    print(results)
+                case .failure(let error):
+                    print("error: \(error.localizedDescription)")
+                }
+            }
         }
     }
     

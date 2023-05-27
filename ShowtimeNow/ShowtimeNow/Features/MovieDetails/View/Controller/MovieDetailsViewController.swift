@@ -21,7 +21,8 @@ final class MovieDetailsViewController: UIViewController {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
-        setup()
+        setupNavigationItem()
+        configure()
     }
 
     required init?(coder: NSCoder) {
@@ -36,12 +37,20 @@ final class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    private func setup() {
+    private func setupNavigationItem() {
         navigationItem.largeTitleDisplayMode = .never
-        
+    }
+    
+    private func configure() {
         detailsView.title.text = viewModel.title
         detailsView.releaseDate.text = viewModel.releaseDate
         detailsView.rating.text = viewModel.rating
         detailsView.overview.text = viewModel.overview
+        
+        detailsView.favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
+    }
+    
+    @objc func likedMovie() {
+        // TODO: save status and update view
     }
 }

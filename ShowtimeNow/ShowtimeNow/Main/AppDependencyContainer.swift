@@ -55,7 +55,7 @@ final class AppDependencyContainer {
     }
     
     private func makeMovieListCellViewModel(movie: MovieEntity) -> MovieListCellViewModel {
-        return MovieListCellViewModel(movie: movie) //
+        return MovieListCellViewModel(movie: movie)
     }
     
     private func makeMovieDetailViewController(with movie: MovieEntity) -> MovieDetailsViewController {

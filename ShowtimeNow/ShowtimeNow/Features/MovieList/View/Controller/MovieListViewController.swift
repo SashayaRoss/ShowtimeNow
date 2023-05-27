@@ -8,6 +8,7 @@
 import UIKit
 
 final class MovieListViewController: UIViewController {
+    private let repository: SearchLoading // TMP:
     private let viewModel: MovieListViewModel
     private let viewFactory: MovieListViewProducing
     private let cellViewModelFactory: (_ movie: MovieEntity) -> MovieListCellViewModel
@@ -17,10 +18,12 @@ final class MovieListViewController: UIViewController {
     private lazy var listView = viewFactory.make()
     
     init(
+        repository: SearchLoading,
         viewModel: MovieListViewModel,
         viewFactory: MovieListViewProducing,
         cellViewModelFactory: @escaping (_ movie: MovieEntity) -> MovieListCellViewModel
     ) {
+        self.repository = repository
         self.viewModel = viewModel
         self.viewFactory = viewFactory
         self.cellViewModelFactory = cellViewModelFactory
@@ -66,7 +69,7 @@ final class MovieListViewController: UIViewController {
     }
     
     @objc func didTapSearch() {
-        let vc = SearchViewController()
+        let vc = SearchViewController(repository: repository)
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
