@@ -27,7 +27,7 @@ final class MoviesRepository {
 }
 
 extension MoviesRepository: MoviesLoading {
-    func getMovies(completion: @escaping (Result<[MovieEntity], Swift.Error>) -> Void) {
+    func getMovies(completion: @escaping (Result<MoviesEntity, Swift.Error>) -> Void) {
         let moviesEndpoint = endpoint.getMoviesPath()
         
         guard let network = networkService else {
@@ -39,13 +39,9 @@ extension MoviesRepository: MoviesLoading {
             switch result {
             case let .success(data):
                 do {
-//                    let decoder = JSONDecoder()
-//                    let movies = try decoder.decode([MovieEntity].self, from: data)
-//                    completion(.success(movies))
-                    
-                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(result)
-                    completion(.success([]))
+                    let decoder = JSONDecoder()
+                    let movies = try decoder.decode(MoviesEntity.self, from: data)
+                    completion(.success(movies))
                 } catch let error {
                     completion(.failure(Error.invalidData(error: error)))
                 }

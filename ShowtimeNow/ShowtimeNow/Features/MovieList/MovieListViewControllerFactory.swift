@@ -5,15 +5,19 @@
 //  Created by Aleksandra Kustra on 27/05/2023.
 //
 
-import UIKit
-
 final class MovieListViewControllerFactory {
     private let networkService: NetworkServiceProviding?
+    private let responder: MoviesResponder
+    private let cellViewModelFactory: (_ movie: Movie) -> MovieListCellViewModel
     
     init(
-        networkService: NetworkServiceProviding?
+        networkService: NetworkServiceProviding?,
+        responder: MoviesResponder,
+        cellViewModelFactory: @escaping (_ movie: Movie) -> MovieListCellViewModel
     ) {
         self.networkService = networkService
+        self.responder = responder
+        self.cellViewModelFactory = cellViewModelFactory
     }
 
     func configure() -> MovieListViewController {
@@ -22,11 +26,26 @@ final class MovieListViewControllerFactory {
             networkService: networkService,
             endpoint: endpoint
         )
+
+        let viewModel = MovieListViewModel(
+            moviesRepository: repository,
+            moviesResponder: responder
+        )
         
-//        move repository to viewModel
-        let viewController = MovieListViewController(moviesRepository: repository)
+        let appearanceManager = ListAppearanceManager()
+        let layoutManager = MovieListLayoutManager()
+        
+        let viewFactory = MovieListViewFactory(
+            appearanceManager: appearanceManager,
+            layoutManager: layoutManager
+        )
+        
+        let viewController = MovieListViewController(
+            viewModel: viewModel,
+            viewFactory: viewFactory,
+            cellViewModelFactory: cellViewModelFactory
+        )
         
         return viewController
     }
 }
-

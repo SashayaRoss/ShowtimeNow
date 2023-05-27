@@ -8,6 +8,6 @@
 import Foundation
 
 protocol MoviesLoading {
-    func getMovies(completion: @escaping (Result<[MovieEntity], Error>) -> Void)
+    func getMovies(completion: @escaping (Result<MoviesEntity, Error>) -> Void)
 }
 

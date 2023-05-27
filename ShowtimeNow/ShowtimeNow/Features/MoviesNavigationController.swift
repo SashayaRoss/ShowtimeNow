@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 
 final class MoviesNavigationController: UINavigationController {
+    private let viewModel: MainViewModel
     private let listViewController: MovieListViewController
 
-    init(listViewController: MovieListViewController) {
+    init(viewModel: MainViewModel,
+         listViewController: MovieListViewController
+    ) {
+        self.viewModel = viewModel
         self.listViewController = listViewController
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,11 +27,31 @@ final class MoviesNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        presentList()
+        bindToViewModel()
     }
 
+    private func bindToViewModel() {
+        viewModel.viewState.bind { [weak self] state in
+            guard
+                let strongSelf = self
+            else {
+                return
+            }
+
+            switch state {
+            case .list:
+                strongSelf.presentList()
+            case let .detail(movie):
+                strongSelf.presentDetails(with: movie)
+            }
+        }
+    }
+    
     private func presentList() {
         pushViewController(listViewController, animated: false)
     }
-}
 
+    private func presentDetails(with movie: Movie) {
+        // TODO: 
+    }
+}

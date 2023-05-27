@@ -8,7 +8,12 @@
 import Foundation
 
 final class AppDependencyContainer {
+    let viewModel: MainViewModel
     lazy var appConfiguration = AppConfiguration()
+    
+    init() {
+        viewModel = MainViewModel()
+    }
     
     private func makeNetworkService() -> NetworkService? {
         guard let url = URL(string: appConfiguration.baseURL) else {
@@ -22,16 +27,29 @@ final class AppDependencyContainer {
     
     private func makeMoviesController() -> MoviesNavigationController {
         let listViewController = makeMovieListViewController()
-        return MoviesNavigationController(listViewController: listViewController)
+        
+        return MoviesNavigationController(viewModel: viewModel, listViewController: listViewController)
     }
     
     private func makeMovieListViewController() -> MovieListViewController {
         let networkService = makeNetworkService()
         
+        let cellViewModelFactory = { (movie: Movie) in
+            return self.makeMovieListCellViewModel(
+                movie: movie
+            )
+        }
+        
         let viewControllerFactory = MovieListViewControllerFactory(
-            networkService: networkService
+            networkService: networkService,
+            responder: viewModel,
+            cellViewModelFactory: cellViewModelFactory
         )
         return viewControllerFactory.configure()
+    }
+    
+    private func makeMovieListCellViewModel(movie: Movie) -> MovieListCellViewModel {
+        return MovieListCellViewModel(movie: movie)
     }
     
     private func makeMovieDetailViewController() {} // TODO:
