@@ -34,8 +34,17 @@ final class MovieDetailsViewModel {
         movie.overview ?? "N/A"
     }
     
-    var isFavourite: Bool {
-        false // TODO: 
+    var favouriteButtonImage: UIImage? = UIImage(systemName: "star")
+    
+    var isFavourite: Bool = false {
+        didSet {
+            let image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+            favouriteButtonImage = image
+        }
+    }
+    
+    func updateFavouriteButton() {
+        isFavourite = isFavourite ? false : true
     }
 
     init(movie: MovieEntity) {

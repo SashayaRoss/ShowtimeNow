@@ -53,8 +53,8 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
               !querry.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        
-        repository.search(with: querry) { [weak self] result in
+
+        repository.search(with: querry) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):

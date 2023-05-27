@@ -46,11 +46,16 @@ final class MovieDetailsViewController: UIViewController {
         detailsView.releaseDate.text = viewModel.releaseDate
         detailsView.rating.text = viewModel.rating
         detailsView.overview.text = viewModel.overview
-        
+        detailsView.favouriteButton.setImage(viewModel.favouriteButtonImage, for: .normal)
+
         detailsView.favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
     }
     
     @objc func likedMovie() {
-        // TODO: save status and update view
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModel.updateFavouriteButton()
+            self?.detailsView.favouriteButton.setImage(self?.viewModel.favouriteButtonImage, for: .normal)
+            // TODO: save status and update view
+        }
     }
 }
