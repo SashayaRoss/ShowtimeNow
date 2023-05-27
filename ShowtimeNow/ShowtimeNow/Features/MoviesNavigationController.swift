@@ -12,14 +12,18 @@ final class MoviesNavigationController: UINavigationController {
     private let viewModel: MainViewModel
     private let listViewController: MovieListViewController
     private let detailsViewController: (_ movie: MovieEntity) -> MovieDetailsViewController
+    private let searchViewController: SearchViewController
 
-    init(viewModel: MainViewModel,
-         listViewController: MovieListViewController,
-         detailsViewController: @escaping (_ movie: MovieEntity) -> MovieDetailsViewController
+    init(
+        viewModel: MainViewModel,
+        listViewController: MovieListViewController,
+        detailsViewController: @escaping (_ movie: MovieEntity) -> MovieDetailsViewController,
+        searchViewController: SearchViewController
     ) {
         self.viewModel = viewModel
         self.listViewController = listViewController
         self.detailsViewController = detailsViewController
+        self.searchViewController = searchViewController
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,6 +57,8 @@ final class MoviesNavigationController: UINavigationController {
                 strongSelf.presentList()
             case let .detail(movie):
                 strongSelf.presentDetails(with: movie)
+            case .search:
+                strongSelf.presentSearch()
             }
         }
     }
@@ -63,6 +69,11 @@ final class MoviesNavigationController: UINavigationController {
 
     private func presentDetails(with movie: MovieEntity) {
         let viewController = detailsViewController(movie)
+        pushViewController(viewController, animated: true)
+    }
+    
+    private func presentSearch() {
+        let viewController = searchViewController
         pushViewController(viewController, animated: true)
     }
 }

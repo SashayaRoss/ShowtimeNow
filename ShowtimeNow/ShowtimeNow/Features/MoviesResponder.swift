@@ -7,4 +7,5 @@
 
 protocol MoviesResponder {
     func showDetail(movie: MovieEntity)
+    func showSearch()
 }

@@ -7,22 +7,19 @@
 
 import UIKit
 
-struct SearchSection {
-    let title: String
-    let results: [MovieEntity]
-}
-
 protocol SearchResultsViewControllerDelegate: AnyObject {
     func didTapResults(_ movie: MovieEntity)
 }
 
 final class SearchResultsViewController: UIViewController {
-    
-    private var sections: [SearchSection] = []
     weak var delegate: SearchResultsViewControllerDelegate?
+    private var results: [MovieEntity] = []
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(
+            SearchResultsTableViewCell.self,
+            forCellReuseIdentifier: NSStringFromClass(SearchResultsTableViewCell.self))
         tableView.isHidden = true
         return tableView
     }()
@@ -41,29 +38,43 @@ final class SearchResultsViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
-    func update(with results: [MovieEntity]) {}
+    func update(with results: [MovieEntity]) {
+        self.results = results
+        tableView.reloadData()
+        tableView.isHidden = results.isEmpty
+    }
 }
 
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].results.count
+        results.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+        1
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].title
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        300
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let result = sections[indexPath.section].results[indexPath.row]
-        return UITableViewCell()
+        let result = results[indexPath.row]
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: NSStringFromClass(SearchResultsTableViewCell.self),
+            for: indexPath) as? SearchResultsTableViewCell else {
+                return UITableViewCell()
+            }
+        cell.configure(with: SearchResultsTableViewCellViewModel(
+            title: result.title,
+            imageURL: URL(string: result.poster_path ?? "")))
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let result = results[indexPath.row]
+        delegate?.didTapResults(result)
     }
 }
-

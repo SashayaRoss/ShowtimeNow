@@ -46,7 +46,6 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupLayout()
         setupAppearance()
     }
     
@@ -54,7 +53,9 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupLayout() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
         contentView.addSubview(imageView)
         contentView.addSubview(favouriteButton)
         contentView.addSubview(title)

@@ -51,4 +51,8 @@ final class MovieListViewModel {
     func showDetails(movie: MovieEntity) {
         moviesResponder.showDetail(movie: movie)
     }
+    
+    func showSearch() {
+        moviesResponder.showSearch()
+    }
 }

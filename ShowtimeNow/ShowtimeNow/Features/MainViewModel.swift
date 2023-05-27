@@ -15,4 +15,8 @@ final class MainViewModel: MoviesResponder {
     func showDetail(movie: MovieEntity) {
         viewState.value = .detail(movie: movie)
     }
+    
+    func showSearch() {
+        viewState.value = .search
+    }
 }

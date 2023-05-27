@@ -27,19 +27,21 @@ final class AppDependencyContainer {
     }
     
     private func makeMoviesController() -> MoviesNavigationController {
-        let listViewController = makeMovieListViewController()
+        let networkService = makeNetworkService()
+        
+        let listViewController = makeMovieListViewController(networkService: networkService)
         let detailsViewController = makeMovieDetailViewController
+        let searchViewController = makeSearchViewController(networkService: networkService)
         
         return MoviesNavigationController(
             viewModel: viewModel,
             listViewController: listViewController,
-            detailsViewController: detailsViewController
+            detailsViewController: detailsViewController,
+            searchViewController: searchViewController
         )
     }
     
-    private func makeMovieListViewController() -> MovieListViewController {
-        let networkService = makeNetworkService()
-        
+    private func makeMovieListViewController(networkService: NetworkService?) -> MovieListViewController {
         let cellViewModelFactory = { (movie: MovieEntity) in
             return self.makeMovieListCellViewModel(
                 movie: movie
@@ -55,12 +57,18 @@ final class AppDependencyContainer {
     }
     
     private func makeMovieListCellViewModel(movie: MovieEntity) -> MovieListCellViewModel {
-        return MovieListCellViewModel(movie: movie)
+        MovieListCellViewModel(movie: movie)
     }
     
     private func makeMovieDetailViewController(with movie: MovieEntity) -> MovieDetailsViewController {
         let viewControllerFactory = MovieDetailsViewControllerFactory()
         return viewControllerFactory.configure(movie: movie)
+    }
+    
+    private func makeSearchViewController(networkService: NetworkService?) -> SearchViewController {
+        let endpoint = SearchEndpoint()
+        let repository = SearchRepository(networkService: networkService, endpoint: endpoint)
+        return SearchViewController(repository: repository)
     }
     
     func makeMainViewController() -> MainViewController {

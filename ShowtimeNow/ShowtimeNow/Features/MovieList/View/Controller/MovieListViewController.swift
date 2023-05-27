@@ -69,9 +69,7 @@ final class MovieListViewController: UIViewController {
     }
     
     @objc func didTapSearch() {
-        let vc = SearchViewController(repository: repository)
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.showSearch()
     }
 
     private func setupCollectionView() {

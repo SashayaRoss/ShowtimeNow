@@ -18,9 +18,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
         return vc
     }()
     
-    init(
-        repository: SearchLoading
-    ) {
+    init(repository: SearchLoading) {
         self.repository = repository
         super.init(nibName: nil, bundle: nil)
     }
@@ -60,9 +58,29 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-//                    resultsController.update(with: results)
-                    print(results)
+                    resultsController.update(with: results.results)
                 case .failure(let error):
+                    //MOCK:
+                    let results: [MovieEntity] = [
+                        MovieEntity(
+                            id: 1,
+                            title: "Mocked Title 1",
+                            backdrop_path: nil,
+                            poster_path: nil,
+                            overview: "Some mock overview",
+                            release_date: nil,
+                            vote_average: 5.5
+                        ),
+                        MovieEntity(
+                            id: 2,
+                            title: "Mocked Title 2"
+                            , backdrop_path: nil,
+                            poster_path: nil,
+                            overview: "Some overView 213 12321 ",
+                            release_date: nil,
+                            vote_average: 5.5),
+                    ]
+                    resultsController.update(with: results)
                     print("error: \(error.localizedDescription)")
                 }
             }
@@ -75,5 +93,8 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
 extension SearchViewController: SearchResultsViewControllerDelegate {
     func didTapResults(_ result: MovieEntity) {
         print("test: \(result)")
+//        let vc = MovieDetailsViewController(album: model)
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(vc, animated: true)
     }
 }

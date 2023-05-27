@@ -8,4 +8,5 @@
 enum MoviesViewState {
     case list
     case detail(movie: MovieEntity)
+    case search
 }
