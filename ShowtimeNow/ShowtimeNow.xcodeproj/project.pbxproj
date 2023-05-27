@@ -506,9 +506,9 @@
 			children = (
 				7EC810882A21738B00524507 /* NetworkServiceProviding.swift */,
 				7EC8108E2A2173DE00524507 /* NetworkSession.swift */,
+				7EC810902A21741000524507 /* NetworkService.swift */,
 				7EC8108C2A2173C400524507 /* NetworkConfig.swift */,
 				7EC8108A2A2173B300524507 /* ApiDataNetworkConfig.swift */,
-				7EC810902A21741000524507 /* NetworkService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

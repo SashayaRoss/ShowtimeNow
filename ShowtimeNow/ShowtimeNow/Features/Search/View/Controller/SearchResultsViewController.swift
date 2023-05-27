@@ -39,9 +39,11 @@ final class SearchResultsViewController: UIViewController {
     }
     
     func update(with results: [MovieEntity]) {
-        self.results = results
-        tableView.reloadData()
-        tableView.isHidden = results.isEmpty
+        DispatchQueue.main.async { [weak self] in
+            self?.results = results
+            self?.tableView.reloadData()
+            self?.tableView.isHidden = results.isEmpty
+        }
     }
 }
 

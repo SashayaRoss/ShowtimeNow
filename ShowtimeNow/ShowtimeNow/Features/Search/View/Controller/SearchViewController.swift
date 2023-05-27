@@ -60,28 +60,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
                 case .success(let results):
                     resultsController.update(with: results.results)
                 case .failure(let error):
-                    //MOCK:
-                    let results: [MovieEntity] = [
-                        MovieEntity(
-                            id: 1,
-                            title: "Mocked Title 1",
-                            backdrop_path: nil,
-                            poster_path: nil,
-                            overview: "Some mock overview",
-                            release_date: nil,
-                            vote_average: 5.5
-                        ),
-                        MovieEntity(
-                            id: 2,
-                            title: "Mocked Title 2"
-                            , backdrop_path: nil,
-                            poster_path: nil,
-                            overview: "Some overView 213 12321 ",
-                            release_date: nil,
-                            vote_average: 5.5),
-                    ]
-                    resultsController.update(with: results)
-                    print("error: \(error.localizedDescription)")
+                    print("error: \(error.localizedDescription)") // TODO: handle properly
                 }
             }
         }
