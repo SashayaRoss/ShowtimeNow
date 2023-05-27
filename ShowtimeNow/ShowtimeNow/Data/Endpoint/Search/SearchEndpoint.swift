@@ -9,7 +9,7 @@ import Foundation
 
 final class SearchEndpoint: APIEndpoint {
     var path: String {
-        return "/serach/movie"
+        return "/search/movie"
     }
 }
 
