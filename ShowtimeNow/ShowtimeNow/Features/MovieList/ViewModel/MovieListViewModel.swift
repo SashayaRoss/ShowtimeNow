@@ -49,6 +49,7 @@ final class MovieListViewModel {
         movies[indexPath.row]
     }
     
-    func showDetails(movie: MoviesEntity) {}
+    func showDetails(movie: Movie) {
+        moviesResponder.showDetail(movie: movie)
+    }
 }
-

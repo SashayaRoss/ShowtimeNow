@@ -127,7 +127,7 @@ extension MovieListViewController: UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // show details
+        viewModel.showDetails(movie: viewModel.movie(for: indexPath))
     }
 }
 

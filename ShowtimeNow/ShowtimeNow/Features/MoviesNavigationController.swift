@@ -11,12 +11,16 @@ import UIKit
 final class MoviesNavigationController: UINavigationController {
     private let viewModel: MainViewModel
     private let listViewController: MovieListViewController
+    private let detailsViewController: (_ movie: Movie) -> MovieDetailsViewController
 
     init(viewModel: MainViewModel,
-         listViewController: MovieListViewController
+         listViewController: MovieListViewController,
+         detailsViewController: @escaping (_ movie: Movie) -> MovieDetailsViewController
     ) {
         self.viewModel = viewModel
         self.listViewController = listViewController
+        self.detailsViewController = detailsViewController
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,6 +56,7 @@ final class MoviesNavigationController: UINavigationController {
     }
 
     private func presentDetails(with movie: Movie) {
-        // TODO: 
+        let viewController = detailsViewController(movie)
+        pushViewController(viewController, animated: true)
     }
 }

@@ -27,8 +27,13 @@ final class AppDependencyContainer {
     
     private func makeMoviesController() -> MoviesNavigationController {
         let listViewController = makeMovieListViewController()
+        let detailsViewController = makeMovieDetailViewController
         
-        return MoviesNavigationController(viewModel: viewModel, listViewController: listViewController)
+        return MoviesNavigationController(
+            viewModel: viewModel,
+            listViewController: listViewController,
+            detailsViewController: detailsViewController
+        )
     }
     
     private func makeMovieListViewController() -> MovieListViewController {
@@ -49,10 +54,13 @@ final class AppDependencyContainer {
     }
     
     private func makeMovieListCellViewModel(movie: Movie) -> MovieListCellViewModel {
-        return MovieListCellViewModel(movie: movie)
+        return MovieListCellViewModel(movie: movie) //
     }
     
-    private func makeMovieDetailViewController() {} // TODO:
+    private func makeMovieDetailViewController(with movie: Movie) -> MovieDetailsViewController {
+        let viewControllerFactory = MovieDetailsViewControllerFactory()
+        return viewControllerFactory.configure(movie: movie)
+    }
     
     func makeMainViewController() -> MainViewController {
         let moviesViewController = makeMoviesController()
