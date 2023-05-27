@@ -37,6 +37,9 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func setup() {
-        navigationItem.title = viewModel.title
+        detailsView.title.text = viewModel.title
+        detailsView.releaseDate.text = viewModel.releaseDate
+        detailsView.rating.text = viewModel.rating
+        detailsView.overview.text = viewModel.overview
     }
 }

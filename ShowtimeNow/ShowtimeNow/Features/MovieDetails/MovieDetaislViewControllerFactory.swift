@@ -8,7 +8,14 @@
 final class MovieDetailsViewControllerFactory {
     func configure(movie: MovieEntity) -> MovieDetailsViewController {
         let viewModel = MovieDetailsViewModel(movie: movie)
-        let viewFactory = MovieDetailsViewFactory()
+        
+        let appearanceManager = MovieDetailsAppearanceManager()
+        let layoutManager = MovieDetailsLayoutManager()
+        
+        let viewFactory = MovieDetailsViewFactory(
+            appearanceManager: appearanceManager,
+            layoutManager: layoutManager
+        )
         
         return MovieDetailsViewController(
             viewFactory: viewFactory,
@@ -16,4 +23,3 @@ final class MovieDetailsViewControllerFactory {
         )
     }
 }
-

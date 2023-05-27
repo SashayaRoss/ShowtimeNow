@@ -31,7 +31,13 @@ final class MoviesNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigationBar()
         bindToViewModel()
+    }
+    
+    private func setupNavigationBar() {
+        navigationBar.tintColor = .label
+        navigationBar.prefersLargeTitles = true
     }
 
     private func bindToViewModel() {

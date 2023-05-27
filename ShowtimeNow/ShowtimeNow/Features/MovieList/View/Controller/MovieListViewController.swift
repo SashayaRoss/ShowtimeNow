@@ -47,11 +47,16 @@ final class MovieListViewController: UIViewController {
     }
     
     private func setup() {
+        setupNavigation()
         setupCollectionView()
-        navigationItem.title = "LIST"
         
         self.refresher.addTarget(self, action: #selector(refresh), for: .valueChanged)
         listView.collectionView.refreshControl = refresher
+    }
+    
+    private func setupNavigation() {
+        title = "Currently played"
+        navigationItem.largeTitleDisplayMode = .always
     }
 
     private func setupCollectionView() {

@@ -31,11 +31,7 @@ final class MovieListLayoutManager {
 
 extension MovieListLayoutManager: MovieListLayoutManaging {
     func layout(view: MovieListViewInterface) {
-        let layout = UICollectionViewFlowLayout()
-        view.collectionView.collectionViewLayout = layout
-        
         setupHierarchy(in: view)
         setupConstraints(in: view)
     }
 }
-

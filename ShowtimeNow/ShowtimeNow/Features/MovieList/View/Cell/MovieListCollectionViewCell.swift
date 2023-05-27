@@ -8,16 +8,21 @@
 import UIKit
 
 final class MovieListCollectionViewCell: UICollectionViewCell {
-    private let contentContainer: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 10
-        return stackView
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "photo")
+        imageView.tintColor = .darkBlue()
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 8
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
 
     private let title: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -33,18 +38,27 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupLayout() {
-        addSubview(contentContainer)
-        contentContainer.addArrangedSubview(title)
+        contentView.addSubview(imageView)
+        contentView.addSubview(title)
         
-        contentContainer.translatesAutoresizingMaskIntoConstraints = false
+        contentView.clipsToBounds = true
+        
         title.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
+        let imageSize = contentView.height - Constants.bigPadding
         NSLayoutConstraint.activate([
-            contentContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            contentContainer.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            contentContainer.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            contentContainer.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.smallPadding),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.smallPadding),
+            imageView.heightAnchor.constraint(equalToConstant: imageSize),
+            
+            title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -Constants.smallPadding),
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            title.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        title.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private func setupAppearance() {
@@ -55,5 +69,10 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     func configure(with viewModel: MovieListCellViewModel) {
         title.text = viewModel.title
+    }
+    
+    private struct Constants {
+        static let smallPadding: CGFloat = 10.0
+        static let bigPadding: CGFloat = 40.0
     }
 }

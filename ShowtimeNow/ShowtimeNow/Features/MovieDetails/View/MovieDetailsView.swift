@@ -7,4 +7,10 @@
 
 import UIKit
 
-final class MovieDetailsView: UIView, MovieDetailsViewInterface {}
+final class MovieDetailsView: UIView, MovieDetailsViewInterface {
+    let imageView = UIImageView()
+    let title = UILabel()
+    let releaseDate = UILabel()
+    let overview = UILabel()
+    let rating = UILabel()
+}
