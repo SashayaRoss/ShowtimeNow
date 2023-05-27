@@ -8,12 +8,12 @@
 final class MovieListViewControllerFactory {
     private let networkService: NetworkServiceProviding?
     private let responder: MoviesResponder
-    private let cellViewModelFactory: (_ movie: Movie) -> MovieListCellViewModel
+    private let cellViewModelFactory: (_ movie: MovieEntity) -> MovieListCellViewModel
     
     init(
         networkService: NetworkServiceProviding?,
         responder: MoviesResponder,
-        cellViewModelFactory: @escaping (_ movie: Movie) -> MovieListCellViewModel
+        cellViewModelFactory: @escaping (_ movie: MovieEntity) -> MovieListCellViewModel
     ) {
         self.networkService = networkService
         self.responder = responder

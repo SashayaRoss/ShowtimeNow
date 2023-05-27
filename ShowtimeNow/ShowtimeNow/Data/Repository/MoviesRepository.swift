@@ -35,7 +35,7 @@ extension MoviesRepository: MoviesLoading {
             return
         }
         
-        network.requestData(with: moviesEndpoint, params: [:]) { result in
+        network.requestData(with: moviesEndpoint) { result in
             switch result {
             case let .success(data):
                 do {

@@ -160,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				7EB4E3BC2A21774C00788776 /* APIEndpoint.swift */,
-				7EB4E3BE2A21775400788776 /* Movies */,
+				7EB4E3BE2A21775400788776 /* MoviesList */,
 			);
 			path = Endpoint;
 			sourceTree = "<group>";
@@ -182,13 +182,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		7EB4E3BE2A21775400788776 /* Movies */ = {
+		7EB4E3BE2A21775400788776 /* MoviesList */ = {
 			isa = PBXGroup;
 			children = (
 				7EB4E3B82A21770200788776 /* MoviesEndpoint.swift */,
 				7EB4E3BA2A21772E00788776 /* MoviesProviding.swift */,
 			);
-			path = Movies;
+			path = MoviesList;
 			sourceTree = "<group>";
 		};
 		7EB4E3BF2A21793900788776 /* MovieList */ = {

@@ -20,4 +20,3 @@ extension UIColor {
         UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.00)
     }
 }
-

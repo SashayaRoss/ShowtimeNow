@@ -8,17 +8,17 @@
 import Foundation
 
 struct MoviesEntity: Decodable {
-    let results: [Movie]
+    let results: [MovieEntity]
 }
 
-struct Movie: Decodable { // fix name
+struct MovieEntity: Decodable {
     let id: Int
     let title: String
     let adult: Bool
-//    let backdropPath: String?
-//    let posterPath: String?
+    let backdropPath: String?
+    let posterPath: String?
     let overview: String?
-//    let releaseDate: String?
-//    let voteAverage: Double
-//    let voteCount: Int
+    let releaseDate: String?
+    let voteAverage: Double?
+    let voteCount: Int?
 }

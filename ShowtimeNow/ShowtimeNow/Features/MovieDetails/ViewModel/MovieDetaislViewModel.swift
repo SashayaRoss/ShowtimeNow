@@ -6,13 +6,13 @@
 //
 
 final class MovieDetailsViewModel {
-    private let movie: Movie
+    private let movie: MovieEntity
     
     var title: String {
         return movie.title
     }
 
-    init(movie: Movie) {
+    init(movie: MovieEntity) {
         self.movie = movie
     }
 }

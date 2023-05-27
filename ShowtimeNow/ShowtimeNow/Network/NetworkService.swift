@@ -17,6 +17,11 @@ final class NetworkService {
     
     private let session: NetworkSession
     private let config: NetworkConfig
+    
+    // TODO: TMP
+    struct Constants {
+        static let apiKey = "cab596273745de3bac5ce9cc9adf5f60"
+    }
 
     init(
         session: NetworkSession = URLSession.shared,
@@ -26,33 +31,27 @@ final class NetworkService {
         self.config = config
     }
     
-    private func urlRequest(with path: String, params: [String: String]?) -> URLRequest? {
+    private func urlRequest(with path: String) -> URLRequest? {
         let url = URL(string: config.baseURL.absoluteString + path)
         guard let url = url, var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            return nil //invalid endpoint
+            return nil // Invalid endpoint
         }
-        
-        // TMP:
-        let apiKey = "cab596273745de3bac5ce9cc9adf5f60"
-        var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
-        
-        if let params = params {
-            queryItems.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) })
-        }
+
+        var queryItems = [URLQueryItem(name: "api_key", value: Constants.apiKey)]
+        queryItems.append(contentsOf: config.queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) })
         
         urlComponents.queryItems = queryItems
         guard let finaUrl = urlComponents.url else {
-            return nil //invalid Url
+            return nil // Invalid Url
         }
-
         
         return URLRequest(url: finaUrl)
     }
 }
 
 extension NetworkService: NetworkServiceProviding {
-    func requestData(with path: String, params: [String: String]? = nil, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
-        guard let request = self.urlRequest(with: path, params: params) else {
+    func requestData(with path: String, completion: @escaping (Result<Data, Swift.Error>) -> Void) {
+        guard let request = self.urlRequest(with: path) else {
             completion(.failure(Error.invalidUrl))
             return
         }

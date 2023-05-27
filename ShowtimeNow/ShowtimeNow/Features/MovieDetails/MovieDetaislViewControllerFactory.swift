@@ -6,7 +6,7 @@
 //
 
 final class MovieDetailsViewControllerFactory {
-    func configure(movie: Movie) -> MovieDetailsViewController {
+    func configure(movie: MovieEntity) -> MovieDetailsViewController {
         let viewModel = MovieDetailsViewModel(movie: movie)
         let viewFactory = MovieDetailsViewFactory()
         

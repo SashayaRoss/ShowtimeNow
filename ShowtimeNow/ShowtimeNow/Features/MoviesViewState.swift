@@ -7,5 +7,5 @@
 
 enum MoviesViewState {
     case list
-    case detail(movie: Movie)
+    case detail(movie: MovieEntity)
 }

@@ -12,7 +12,7 @@ final class MainViewModel: MoviesResponder {
         viewState.value = .list
     }
     
-    func showDetail(movie: Movie) {
+    func showDetail(movie: MovieEntity) {
         viewState.value = .detail(movie: movie)
     }
 }

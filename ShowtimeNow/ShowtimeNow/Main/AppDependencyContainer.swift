@@ -20,7 +20,8 @@ final class AppDependencyContainer {
             return nil
         }
         let configuration = ApiDataNetworkConfig(
-            baseURL: url
+            baseURL: url,
+            queryParameters: [:]
         )
         return NetworkService(config: configuration)
     }
@@ -39,7 +40,7 @@ final class AppDependencyContainer {
     private func makeMovieListViewController() -> MovieListViewController {
         let networkService = makeNetworkService()
         
-        let cellViewModelFactory = { (movie: Movie) in
+        let cellViewModelFactory = { (movie: MovieEntity) in
             return self.makeMovieListCellViewModel(
                 movie: movie
             )
@@ -53,11 +54,11 @@ final class AppDependencyContainer {
         return viewControllerFactory.configure()
     }
     
-    private func makeMovieListCellViewModel(movie: Movie) -> MovieListCellViewModel {
+    private func makeMovieListCellViewModel(movie: MovieEntity) -> MovieListCellViewModel {
         return MovieListCellViewModel(movie: movie) //
     }
     
-    private func makeMovieDetailViewController(with movie: Movie) -> MovieDetailsViewController {
+    private func makeMovieDetailViewController(with movie: MovieEntity) -> MovieDetailsViewController {
         let viewControllerFactory = MovieDetailsViewControllerFactory()
         return viewControllerFactory.configure(movie: movie)
     }

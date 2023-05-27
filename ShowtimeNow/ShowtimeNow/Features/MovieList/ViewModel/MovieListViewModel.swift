@@ -10,7 +10,7 @@ import Foundation
 final class MovieListViewModel {
     private let moviesRepository: MoviesLoading
     private let moviesResponder: MoviesResponder
-    private var movies: [Movie] = []
+    private var movies: [MovieEntity] = []
     var viewState: DynamicType<ListViewState> = DynamicType<ListViewState>()
     
     init(
@@ -39,17 +39,16 @@ final class MovieListViewModel {
                 strongSelf.movies = movies.results
                 strongSelf.viewState.value = .finishedLoading
             case let .failure(error):
-                print("error") // remove
                 strongSelf.viewState.value = .error(error: error)
             }
         }
     }
     
-    func movie(for indexPath: IndexPath) -> Movie {
+    func movie(for indexPath: IndexPath) -> MovieEntity {
         movies[indexPath.row]
     }
     
-    func showDetails(movie: Movie) {
+    func showDetails(movie: MovieEntity) {
         moviesResponder.showDetail(movie: movie)
     }
 }

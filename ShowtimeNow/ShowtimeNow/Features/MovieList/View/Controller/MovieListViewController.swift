@@ -10,7 +10,7 @@ import UIKit
 final class MovieListViewController: UIViewController {
     private let viewModel: MovieListViewModel
     private let viewFactory: MovieListViewProducing
-    private let cellViewModelFactory: (_ movie: Movie) -> MovieListCellViewModel
+    private let cellViewModelFactory: (_ movie: MovieEntity) -> MovieListCellViewModel
     
     private let refresher: UIRefreshControl
     
@@ -19,7 +19,7 @@ final class MovieListViewController: UIViewController {
     init(
         viewModel: MovieListViewModel,
         viewFactory: MovieListViewProducing,
-        cellViewModelFactory: @escaping (_ movie: Movie) -> MovieListCellViewModel
+        cellViewModelFactory: @escaping (_ movie: MovieEntity) -> MovieListCellViewModel
     ) {
         self.viewModel = viewModel
         self.viewFactory = viewFactory
@@ -97,7 +97,7 @@ final class MovieListViewController: UIViewController {
         self.listView.collectionView.refreshControl?.endRefreshing()
     }
     
-    //TODO: separating ErrorView
+    //TODO: separate ErrorView
     private func presentError(error: Error) {
         let ac = UIAlertController(
             title: "Error",

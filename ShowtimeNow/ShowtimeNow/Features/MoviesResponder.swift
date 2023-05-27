@@ -6,5 +6,5 @@
 //
 
 protocol MoviesResponder {
-    func showDetail(movie: Movie)
+    func showDetail(movie: MovieEntity)
 }
