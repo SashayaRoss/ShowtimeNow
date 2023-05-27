@@ -57,6 +57,18 @@ final class MovieListViewController: UIViewController {
     private func setupNavigation() {
         title = "Currently played"
         navigationItem.largeTitleDisplayMode = .always
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "magnifyingglass"),
+            style: .done,
+            target: self,
+            action: #selector(didTapSearch))
+    }
+    
+    @objc func didTapSearch() {
+        let vc = SearchViewController()
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func setupCollectionView() {
@@ -102,7 +114,7 @@ final class MovieListViewController: UIViewController {
         self.listView.collectionView.refreshControl?.endRefreshing()
     }
     
-    //TODO: separate ErrorView
+    //TODO: Possible improvement idea - separate ErrorView
     private func presentError(error: Error) {
         let ac = UIAlertController(
             title: "Error",
