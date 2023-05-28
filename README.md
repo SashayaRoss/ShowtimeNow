@@ -9,7 +9,7 @@ Discover the hottest releases, browse showtimes, and plan your movie nights effo
 Feed view displays a list of current cinema releases. 
 Each cell shows a thumbnail, title and star icon (liked by user status).
 
-![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 33 14](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/5543378c-08d9-4f89-811b-2ac1fbeb28a2)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 33 14](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/47be333c-1e02-4f0c-916c-cc996a80dd97)
 
 
 ### **Show movie's details view**
@@ -22,14 +22,15 @@ Details view displais:
 - overview
 - "liked by user" status
 
-
-![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 33 18](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/d6aaf4ed-3af4-4c75-8561-21f45ada2760)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 33 18](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/5a9df30f-6c1b-4490-a055-1d43108810a4)
 
 
 ### **Search for movie**
 You can go to details of the specific movie from search cells.
-![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 32 57](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/57568523-b8dc-4f6a-8cee-25027a0ede1a)
-![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 32 51](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/2c3bf6db-8b40-4b79-9ca9-7ad8b610f872)
+
+
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 32 57](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/0fc19058-8f49-46d6-89a7-dc9ef1f6a3a8)
+![Simulator Screen Shot - iPhone SE (3rd generation) - 2023-05-28 at 15 32 51](https://github.com/SashayaRoss/ShowtimeNow/assets/25226556/74d7dfc2-d246-43b2-a72f-6513210fd5af)
 
 
 ### **Favourites**
