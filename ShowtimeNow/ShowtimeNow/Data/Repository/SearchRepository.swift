@@ -34,7 +34,7 @@ extension SearchRepository: SearchLoading {
             return
         }
         let params = [
-            "query": querry.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            "query": querry
         ]
         
         network.requestData(with: searchEndpoint, params: params) { result in
