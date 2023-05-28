@@ -26,6 +26,16 @@ final class AppDependencyContainer {
         return NetworkService(config: configuration)
     }
     
+    private func makeNetworkServiceForImages() -> NetworkService? {
+        guard let url = URL(string: appConfiguration.imageURL) else {
+            return nil
+        }
+        let configuration = ApiDataNetworkConfig(
+            baseURL: url
+        )
+        return NetworkService(config: configuration)
+    }
+    
     private func makeMoviesController() -> MoviesNavigationController {
         let networkService = makeNetworkService()
         
@@ -42,9 +52,18 @@ final class AppDependencyContainer {
     }
     
     private func makeMovieListViewController(networkService: NetworkService?) -> MovieListViewController {
+        let imageEndpoint = ImageEndpoint()
+        let cache = NSCache<NSString, ImageEntity>()
+        let imageRepository = ImageRepository(
+            networkService: makeNetworkServiceForImages(),
+            endpoint: imageEndpoint,
+            cache: cache
+        )
+        
         let cellViewModelFactory = { (movie: MovieEntity) in
             return self.makeMovieListCellViewModel(
-                movie: movie
+                movie: movie,
+                imageRepository: imageRepository
             )
         }
         
@@ -56,13 +75,27 @@ final class AppDependencyContainer {
         return viewControllerFactory.configure()
     }
     
-    private func makeMovieListCellViewModel(movie: MovieEntity) -> MovieListCellViewModel {
-        MovieListCellViewModel(movie: movie)
+    private func makeMovieListCellViewModel(movie: MovieEntity, imageRepository: ImageLoading) -> MovieListCellViewModel {
+        MovieListCellViewModel(movie: movie, imageRepository: imageRepository)
+    }
+    
+    private func makeSearchCellViewModel(movie: MovieEntity, imageRepository: ImageLoading) -> SearchResultsTableViewCellViewModel {
+        SearchResultsTableViewCellViewModel(movie: movie, imageRepository: imageRepository)
     }
     
     private func makeMovieDetailViewController(with movie: MovieEntity) -> MovieDetailsViewController {
+        let imageEndpoint = ImageEndpoint()
+        let cache = NSCache<NSString, ImageEntity>()
+        let imageRepository = ImageRepository(
+            networkService: makeNetworkServiceForImages(),
+            endpoint: imageEndpoint,
+            cache: cache
+        )
         let viewControllerFactory = MovieDetailsViewControllerFactory()
-        return viewControllerFactory.configure(movie: movie)
+        return viewControllerFactory.configure(
+            movie: movie,
+            imageRepository: imageRepository
+        )
     }
     
     private func makeSearchViewController(networkService: NetworkService?) -> SearchViewController {
@@ -83,7 +116,26 @@ final class AppDependencyContainer {
             appearanceManager: SearchAppearanceManager(),
             layoutManager: SearchLayoutManager()
         )
-        let searchResultsController = SearchResultsViewController(viewFactory: viewFactory)
+        
+        let imageEndpoint = ImageEndpoint()
+        let cache = NSCache<NSString, ImageEntity>()
+        let imageRepository = ImageRepository(
+            networkService: makeNetworkServiceForImages(),
+            endpoint: imageEndpoint,
+            cache: cache
+        )
+        
+        let cellViewModelFactory = { (movie: MovieEntity) in
+            return self.makeSearchCellViewModel(
+                movie: movie,
+                imageRepository: imageRepository
+            )
+        }
+        
+        let searchResultsController = SearchResultsViewController(
+            viewFactory: viewFactory,
+            cellViewModelFactory: cellViewModelFactory
+        )
         return UISearchController(searchResultsController: searchResultsController)
     }
     

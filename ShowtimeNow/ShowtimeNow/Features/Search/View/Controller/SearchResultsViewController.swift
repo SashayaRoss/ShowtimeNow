@@ -13,13 +13,18 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 
 final class SearchResultsViewController: UIViewController {
     private let viewFactory: SearchViewProducing
-    weak var delegate: SearchResultsViewControllerDelegate?
+    private let cellViewModelFactory: (_ movie: MovieEntity) -> SearchResultsTableViewCellViewModel
     private var results: [MovieEntity] = []
+    weak var delegate: SearchResultsViewControllerDelegate?
     
     private lazy var searchView = viewFactory.make()
     
-    init(viewFactory: SearchViewProducing) {
+    init(
+        viewFactory: SearchViewProducing,
+        cellViewModelFactory: @escaping (_ movie: MovieEntity) -> SearchResultsTableViewCellViewModel
+    ) {
         self.viewFactory = viewFactory
+        self.cellViewModelFactory = cellViewModelFactory
         
         super.init(nibName: nil, bundle: nil)
         configure()
@@ -77,16 +82,13 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let result = results[indexPath.row]
-        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NSStringFromClass(SearchResultsTableViewCell.self),
             for: indexPath) as? SearchResultsTableViewCell else {
                 return UITableViewCell()
             }
-        cell.configure(with: SearchResultsTableViewCellViewModel(
-            title: result.title,
-            imageURL: URL(string: result.poster_path ?? "")))
+        let cellViewModel = cellViewModelFactory(results[indexPath.row])
+        cell.configure(with: cellViewModel)
         return cell
     }
     

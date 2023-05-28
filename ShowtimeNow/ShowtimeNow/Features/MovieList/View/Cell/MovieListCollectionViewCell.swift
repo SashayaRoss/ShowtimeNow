@@ -94,6 +94,10 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     func configure(with viewModel: MovieListCellViewModel) {
         title.text = viewModel.title
+        viewModel.getImage { image in
+            self.imageView.image = image
+        }
+        
         favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
     }
     
@@ -104,7 +108,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     private struct Constants {
         static let smallPadding: CGFloat = 10.0
-        static let bigPadding: CGFloat = 40.0
+        static let bigPadding: CGFloat = 60.0
         static let starIconSize: CGFloat = 40.0
     }
 }

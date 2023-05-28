@@ -7,8 +7,12 @@
 
 import Foundation
 
-final class AppConfiguration {
+struct AppConfiguration {
     lazy var baseURL: String = {
-        return "https://api.themoviedb.org/3"
+        "https://api.themoviedb.org/3"
+    }()
+    
+    lazy var imageURL: String = {
+        "https://image.tmdb.org/t/p/w500"
     }()
 }

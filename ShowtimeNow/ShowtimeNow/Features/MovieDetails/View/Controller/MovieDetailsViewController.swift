@@ -47,7 +47,10 @@ final class MovieDetailsViewController: UIViewController {
         detailsView.rating.text = viewModel.rating
         detailsView.overview.text = viewModel.overview
         detailsView.favouriteButton.setImage(viewModel.favouriteButtonImage, for: .normal)
-
+        viewModel.getImage { image in
+            self.detailsView.imageView.image = image
+        }
+        
         detailsView.favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
     }
     

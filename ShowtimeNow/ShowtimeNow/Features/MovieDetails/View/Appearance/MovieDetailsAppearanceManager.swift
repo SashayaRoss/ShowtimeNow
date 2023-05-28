@@ -19,7 +19,7 @@ extension MovieDetailsAppearanceManager: MovieDetailsAppearanceManaging {
         view.imageView.backgroundColor = .customtGray()
         view.imageView.layer.masksToBounds = true
         view.imageView.layer.cornerRadius = 8
-        view.imageView.contentMode = .scaleAspectFill
+        view.imageView.contentMode = .scaleAspectFit
         
         view.title.numberOfLines = 0
         view.title.font = .systemFont(ofSize: 22, weight: .semibold)

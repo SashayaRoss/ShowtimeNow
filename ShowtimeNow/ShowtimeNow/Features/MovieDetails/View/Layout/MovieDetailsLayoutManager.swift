@@ -65,7 +65,7 @@ final class MovieDetailsLayoutManager {
     private struct Constants {
         static let smallPadding: CGFloat = 10.0
         static let bigPadding: CGFloat = 30.0
-        static let imageSize: CGFloat = 300.0
+        static let imageSize: CGFloat = 420.0
         static let starIconSize: CGFloat = 35.0
     }
 }

@@ -9,13 +9,10 @@ import UIKit
 
 final class MovieDetailsViewModel {
     private let movie: MovieEntity
-    
-//    var image: UIImage {
-        //TODO:
-//    }
+    private let imageRepository: ImageLoading
     
     var title: String {
-        return movie.title
+        movie.title
     }
     
     var releaseDate: String {
@@ -34,6 +31,21 @@ final class MovieDetailsViewModel {
         movie.overview ?? "N/A"
     }
     
+    func getImage(completion: @escaping (UIImage?) -> Void) {
+        guard let posterPath = movie.poster_path else {
+            completion(nil)
+            return
+        }
+        imageRepository.getImage(with: posterPath, size: Constants.size) { result in
+            switch result {
+            case let .success(image):
+                completion(image)
+            case .failure:
+                completion(nil)
+            }
+        }
+    }
+    
     var favouriteButtonImage: UIImage? = UIImage(systemName: "star")
     
     var isFavourite: Bool = false {
@@ -47,7 +59,12 @@ final class MovieDetailsViewModel {
         isFavourite = isFavourite ? false : true
     }
 
-    init(movie: MovieEntity) {
+    init(movie: MovieEntity, imageRepository: ImageLoading) {
         self.movie = movie
+        self.imageRepository = imageRepository
+    }
+    
+    private struct Constants {
+        static let size: Int = 150
     }
 }

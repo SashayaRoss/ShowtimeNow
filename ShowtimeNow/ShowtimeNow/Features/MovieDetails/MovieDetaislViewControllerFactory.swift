@@ -6,8 +6,11 @@
 //
 
 final class MovieDetailsViewControllerFactory {
-    func configure(movie: MovieEntity) -> MovieDetailsViewController {
-        let viewModel = MovieDetailsViewModel(movie: movie)
+    func configure(movie: MovieEntity, imageRepository: ImageRepository) -> MovieDetailsViewController {
+        let viewModel = MovieDetailsViewModel(
+            movie: movie,
+            imageRepository: imageRepository
+        )
         
         let appearanceManager = MovieDetailsAppearanceManager()
         let layoutManager = MovieDetailsLayoutManager()

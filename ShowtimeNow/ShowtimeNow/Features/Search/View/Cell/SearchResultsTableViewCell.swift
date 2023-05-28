@@ -12,9 +12,10 @@ final class SearchResultsTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo")
         imageView.tintColor = .darkBlue()
+        imageView.backgroundColor = .customtGray()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 8
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -73,6 +74,8 @@ final class SearchResultsTableViewCell: UITableViewCell {
     
     func configure(with viewModel: SearchResultsTableViewCellViewModel) {
         title.text = viewModel.title
-//        posterImageView // viewModel.url
+        viewModel.getImage { image in
+            self.posterImageView.image = image
+        }
     }
 }
