@@ -14,6 +14,10 @@ final class MovieListCellViewModel: MovieListItemProtocol {
     var title: String {
         movie.title
     }
+    
+    var id: Int {
+        movie.id
+    }
 
     init(movie: MovieEntity, imageRepository: ImageLoading) {
         self.movie = movie

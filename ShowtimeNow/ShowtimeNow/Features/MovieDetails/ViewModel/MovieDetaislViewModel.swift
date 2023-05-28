@@ -54,14 +54,18 @@ final class MovieDetailsViewModel {
             favouriteButtonImage = image
         }
     }
-    
-    func updateFavouriteButton() {
-        isFavourite = isFavourite ? false : true
-    }
 
     init(movie: MovieEntity, imageRepository: ImageLoading) {
         self.movie = movie
         self.imageRepository = imageRepository
+        defer {
+            isFavourite = UserDefaults.standard.bool(forKey: "\(movie.id)")
+        }
+    }
+    
+    func updateFavouriteButton() {
+        isFavourite = isFavourite ? false : true
+        UserDefaults.standard.set(isFavourite, forKey: "\(movie.id)")
     }
     
     private struct Constants {

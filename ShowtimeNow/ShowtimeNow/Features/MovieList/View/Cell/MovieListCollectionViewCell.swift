@@ -36,6 +36,8 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private var id: Int?
+    
     var isFavourite: Bool = false {
         didSet {
             let image = isFavourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
@@ -97,13 +99,17 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         viewModel.getImage { image in
             self.imageView.image = image
         }
+        id = viewModel.id
+        isFavourite = UserDefaults.standard.bool(forKey: "\(viewModel.id)")
         
         favouriteButton.addTarget(self, action: #selector(likedMovie), for: .touchUpInside)
     }
     
     @objc func likedMovie() {
         isFavourite = isFavourite ? false : true
-        // TODO:
+        if let id = id {
+            UserDefaults.standard.set(isFavourite, forKey: "\(id)")
+        }
     }
     
     private struct Constants {

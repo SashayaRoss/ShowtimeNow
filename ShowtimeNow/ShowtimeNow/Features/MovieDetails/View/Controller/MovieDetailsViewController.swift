@@ -58,7 +58,6 @@ final class MovieDetailsViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.viewModel.updateFavouriteButton()
             self?.detailsView.favouriteButton.setImage(self?.viewModel.favouriteButtonImage, for: .normal)
-            // TODO: save status and update view
         }
     }
 }

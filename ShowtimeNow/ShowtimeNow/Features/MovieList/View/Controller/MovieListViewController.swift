@@ -49,6 +49,10 @@ final class MovieListViewController: UIViewController {
         viewModel.loadMovies()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        refresh()
+    }
+    
     private func setup() {
         setupNavigation()
         setupCollectionView()
@@ -110,9 +114,16 @@ final class MovieListViewController: UIViewController {
     }
     
     @objc func refresh() {
-        self.listView.collectionView.refreshControl?.beginRefreshing()
-        viewModel.loadMovies()
-        self.listView.collectionView.refreshControl?.endRefreshing()
+        DispatchQueue.main.async { [weak self] in
+            guard
+                let strongSelf = self
+            else {
+                return
+            }
+            strongSelf.listView.collectionView.refreshControl?.beginRefreshing()
+            strongSelf.viewModel.loadMovies()
+            strongSelf.listView.collectionView.refreshControl?.endRefreshing()
+        }
     }
     
     //TODO: Possible improvement idea - separate ErrorView
