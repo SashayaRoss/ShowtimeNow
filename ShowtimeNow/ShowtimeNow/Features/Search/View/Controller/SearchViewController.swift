@@ -9,7 +9,7 @@ import UIKit
 
 final class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     private let repository: SearchLoading
-    private let moviesResponder: MoviesResponder // TODO: move to vm
+    private let moviesResponder: MoviesResponder
     private let searchResultsController: UISearchController
     
     init(
