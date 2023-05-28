@@ -9,17 +9,14 @@ import UIKit
 
 final class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     private let repository: SearchLoading
+    private let searchResultsController: UISearchController
     
-    private let searchController: UISearchController = {
-        let vc = UISearchController(searchResultsController: SearchResultsViewController())
-        vc.searchBar.placeholder = "Search movie"
-        vc.searchBar.searchBarStyle = .minimal
-        vc.definesPresentationContext = true
-        return vc
-    }()
-    
-    init(repository: SearchLoading) {
+    init(
+        repository: SearchLoading,
+        searchResultsController: UISearchController
+    ) {
         self.repository = repository
+        self.searchResultsController = searchResultsController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,16 +26,25 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigation()
-        view.backgroundColor = .white
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         
-        navigationItem.searchController = searchController
+        view.backgroundColor = .white
+        
+        setupSearchResultsController()
+        setupNavigation()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    private func setupSearchResultsController() {
+        searchResultsController.searchResultsUpdater = self
+        searchResultsController.searchBar.delegate = self
+        searchResultsController.searchBar.placeholder = "Search movie"
+        searchResultsController.searchBar.searchBarStyle = .minimal
+        searchResultsController.definesPresentationContext = true
+        
+        navigationItem.searchController = searchResultsController
     }
     
     private func setupNavigation() {
@@ -48,7 +54,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let resultsController = searchController.searchResultsController as? SearchResultsViewController,
+        guard let resultsController = searchResultsController.searchResultsController as? SearchResultsViewController,
               let querry = searchBar.text,
               !querry.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
@@ -60,7 +66,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
                 case .success(let results):
                     resultsController.update(with: results.results)
                 case .failure(let error):
-                    print("error: \(error.localizedDescription)") // TODO: handle properly
+                    resultsController.handleError(with: error.localizedDescription)
                 }
             }
         }

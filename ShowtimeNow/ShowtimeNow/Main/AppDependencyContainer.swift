@@ -5,7 +5,7 @@
 //  Created by Aleksandra Kustra on 27/05/2023.
 //
 
-import Foundation
+import UIKit
 
 final class AppDependencyContainer {
     let viewModel: MainViewModel
@@ -66,9 +66,25 @@ final class AppDependencyContainer {
     }
     
     private func makeSearchViewController(networkService: NetworkService?) -> SearchViewController {
+        let searchResultsController = makeSearchResultsController()
         let endpoint = SearchEndpoint()
-        let repository = SearchRepository(networkService: networkService, endpoint: endpoint)
-        return SearchViewController(repository: repository)
+        let repository = SearchRepository(
+            networkService: networkService,
+            endpoint: endpoint
+        )
+        return SearchViewController(
+            repository: repository,
+            searchResultsController: searchResultsController
+        )
+    }
+    
+    private func makeSearchResultsController() -> UISearchController {
+        let viewFactory = SearchViewFactory(
+            appearanceManager: SearchAppearanceManager(),
+            layoutManager: SearchLayoutManager()
+        )
+        let searchResultsController = SearchResultsViewController(viewFactory: viewFactory)
+        return UISearchController(searchResultsController: searchResultsController)
     }
     
     func makeMainViewController() -> MainViewController {

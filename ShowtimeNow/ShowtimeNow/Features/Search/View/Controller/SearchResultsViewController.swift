@@ -12,36 +12,54 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
 }
 
 final class SearchResultsViewController: UIViewController {
+    private let viewFactory: SearchViewProducing
     weak var delegate: SearchResultsViewControllerDelegate?
     private var results: [MovieEntity] = []
     
-    private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(
-            SearchResultsTableViewCell.self,
-            forCellReuseIdentifier: NSStringFromClass(SearchResultsTableViewCell.self))
-        tableView.isHidden = true
-        return tableView
-    }()
+    private lazy var searchView = viewFactory.make()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
+    init(viewFactory: SearchViewProducing) {
+        self.viewFactory = viewFactory
         
-        view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
+        super.init(nibName: nil, bundle: nil)
+        configure()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = searchView
+    }
+
+    private func configure() {
+        if let view = view as? SearchViewInterface {
+            view.tableView.delegate = self
+            view.tableView.dataSource = self
+            
+            view.tableView.isHidden = true
+            view.tableView.register(
+                SearchResultsTableViewCell.self,
+                forCellReuseIdentifier: NSStringFromClass(SearchResultsTableViewCell.self))
+        }
     }
     
     func update(with results: [MovieEntity]) {
-        self.results = results
-        tableView.reloadData()
-        tableView.isHidden = results.isEmpty
+        if let view = view as? SearchViewInterface {
+            self.results = results
+            view.tableView.reloadData()
+            view.tableView.isHidden = results.isEmpty
+            view.errorMessage.isHidden = true
+        }
+    }
+    
+    func handleError(with error: String) {
+        if let view = view as? SearchViewInterface {
+            view.errorMessage.text = "Error occured: \n\(error)\nTry again later!"
+            view.tableView.reloadData()
+            view.tableView.isHidden = true
+        }
     }
 }
 
