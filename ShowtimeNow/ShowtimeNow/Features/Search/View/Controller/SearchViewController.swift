@@ -9,14 +9,18 @@ import UIKit
 
 final class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     private let repository: SearchLoading
+    private let moviesResponder: MoviesResponder // TODO: move to vm
     private let searchResultsController: UISearchController
     
     init(
         repository: SearchLoading,
+        moviesResponder: MoviesResponder,
         searchResultsController: UISearchController
     ) {
         self.repository = repository
+        self.moviesResponder = moviesResponder
         self.searchResultsController = searchResultsController
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,6 +63,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
               !querry.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
+        resultsController.delegate = self
 
         repository.search(with: querry) { result in
             DispatchQueue.main.async {
@@ -77,9 +82,6 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating, UIS
 
 extension SearchViewController: SearchResultsViewControllerDelegate {
     func didTapResults(_ result: MovieEntity) {
-        print("test: \(result)")
-//        let vc = MovieDetailsViewController(album: model)
-//        vc.navigationItem.largeTitleDisplayMode = .never
-//        navigationController?.pushViewController(vc, animated: true)
+        moviesResponder.showDetail(movie: result)
     }
 }

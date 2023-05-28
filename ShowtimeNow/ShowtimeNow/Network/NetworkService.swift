@@ -17,11 +17,7 @@ final class NetworkService {
     
     private let session: NetworkSession
     private let config: NetworkConfig
-    
-    // TODO: TMP
-    struct Constants {
-        static let apiKey = "cab596273745de3bac5ce9cc9adf5f60"
-    }
+    lazy var authConfig = AuthConfiguration()
 
     init(
         session: NetworkSession = URLSession.shared,
@@ -37,7 +33,8 @@ final class NetworkService {
             return nil // Invalid endpoint
         }
 
-        var queryItems = [URLQueryItem(name: "api_key", value: Constants.apiKey)]
+        let apiKey = authConfig.apiKey
+        var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         if let params = params {
             queryItems.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) })
         }

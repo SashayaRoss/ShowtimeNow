@@ -107,6 +107,7 @@ final class AppDependencyContainer {
         )
         return SearchViewController(
             repository: repository,
+            moviesResponder: viewModel,
             searchResultsController: searchResultsController
         )
     }
